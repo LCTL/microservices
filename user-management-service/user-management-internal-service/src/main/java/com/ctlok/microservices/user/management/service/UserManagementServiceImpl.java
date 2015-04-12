@@ -62,7 +62,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .map( optional -> {
                     if ( optional.isPresent() ) {
                         final User storedUser = optional.get();
-                        return passwordEncoder.matches( storedUser.getPassword(), user.getPassword() );
+                        return passwordEncoder.matches( user.getPassword(), storedUser.getPassword() );
                     } else {
                         return Boolean.FALSE;
                     }
