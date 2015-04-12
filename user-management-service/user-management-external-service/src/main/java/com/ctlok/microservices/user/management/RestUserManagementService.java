@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
+import reactor.rx.Streams;
+
+import java.util.Optional;
 
 /**
  * Created by Lawrence Cheung on 2015/4/10.
@@ -67,6 +70,22 @@ public class RestUserManagementService {
     public DeferredResult<RestResponse<Boolean>> findByUsername(
             @PathVariable( "id" ) final String id, @RequestBody User user ) {
         return DeferredResultUtils.executeAsync( userManagementService.updatePassword( id, user.getPassword() ) );
+    }
+
+    @RequestMapping( value = "/auth", method = RequestMethod.POST )
+    public DeferredResult<RestResponse<User>> auth( @RequestBody User user ) {
+        return DeferredResultUtils.executeAsyncWithOptional(
+                userManagementService
+                        .isUsernamePasswordExistAndMatch( user )
+                        .map( ( match ) -> {
+                            if ( match ) {
+                                return userManagementService.findByUsername( user.getUsername() );
+                            } else {
+                                return Streams.just( Optional.<User> empty() );
+                            }
+                        } )
+                        .flatMap( stream -> stream )
+        );
     }
 
 }
