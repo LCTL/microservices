@@ -38,13 +38,6 @@ public class RestUserManagementService {
         return DeferredResultUtils.executeAsyncWithOptional( userManagementService.findById( id ) );
     }
 
-    @RequestMapping( method = RequestMethod.GET, params = { "username" } )
-    public DeferredResult<RestResponse<User>> findByUsername(
-            @RequestParam( value = "username", required = false ) final String username ) {
-        return DeferredResultUtils.executeAsyncWithOptional(
-                userManagementService.findByUsername( username ) );
-    }
-
     @RequestMapping( method = RequestMethod.POST )
     public DeferredResult<RestResponse<User>> create( @RequestBody final User user ) {
         return DeferredResultUtils.executeAsync( userManagementService.createUser( user ) );
@@ -61,6 +54,19 @@ public class RestUserManagementService {
     @RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
     public DeferredResult<RestResponse<Boolean>> remove( @PathVariable( "id" ) final String id ) {
         return DeferredResultUtils.executeAsync( userManagementService.deleteUser( id ) );
+    }
+
+    @RequestMapping( method = RequestMethod.GET, params = { "username" } )
+    public DeferredResult<RestResponse<User>> findByUsername(
+            @RequestParam( value = "username", required = false ) final String username ) {
+        return DeferredResultUtils.executeAsyncWithOptional(
+                userManagementService.findByUsername( username ) );
+    }
+
+    @RequestMapping( value = "/{id}/password", method = RequestMethod.PUT )
+    public DeferredResult<RestResponse<Boolean>> findByUsername(
+            @PathVariable( "id" ) final String id, @RequestBody User user ) {
+        return DeferredResultUtils.executeAsync( userManagementService.updatePassword( id, user.getPassword() ) );
     }
 
 }
