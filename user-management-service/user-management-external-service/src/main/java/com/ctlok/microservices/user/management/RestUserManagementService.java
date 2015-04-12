@@ -11,8 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import javax.validation.Valid;
-
 /**
  * Created by Lawrence Cheung on 2015/4/10.
  */
@@ -53,9 +51,9 @@ public class RestUserManagementService {
     }
 
     @RequestMapping( value = "/{id}", method = RequestMethod.PUT )
-    public DeferredResult<RestResponse<User>> save(
+    public DeferredResult<RestResponse<User>> updateOrCreateUser(
             @PathVariable( "id" ) final String id,
-            @Valid @RequestBody final User user ) {
+            @RequestBody final User user ) {
         user.setId( id );
         return DeferredResultUtils.executeAsync( userManagementService.updateOrCreateUser( user ) );
     }

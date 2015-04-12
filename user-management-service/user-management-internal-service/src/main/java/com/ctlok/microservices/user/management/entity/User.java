@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +32,7 @@ public class User implements UserDetails {
     private String password;
 
     @NotEmpty
-    private Collection<String> authorities;
+    private Collection<String> roles;
 
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
@@ -49,7 +50,11 @@ public class User implements UserDetails {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities.stream().map( SimpleGrantedAuthority::new ).collect( Collectors.toSet() );
+        if ( roles == null ) {
+            return Collections.emptyList();
+        } else {
+            return roles.stream().map( SimpleGrantedAuthority::new ).collect( Collectors.toSet() );
+        }
     }
 
 }

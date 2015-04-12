@@ -87,15 +87,12 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .map( optional -> {
                     if ( optional.isPresent() ) {
                         user.setPassword( optional.get().getPassword() );
-                        return userRepository.save( user );
+                        return Streams.just( userRepository.save( user ) ).dispatchOn( env );
                     } else {
-                        try {
-                            return createUser( user ).next().await();
-                        } catch ( InterruptedException e ) {
-                            throw new IllegalStateException( e );
-                        }
+                        return createUser( user );
                     }
-                } );
+                } )
+                .flatMap( stream -> stream );
     }
 
     @Override
