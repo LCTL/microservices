@@ -1,6 +1,7 @@
 package com.ctlok.microservices.user.management.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Lawrence Cheung on 2015/4/10.
+ * @author Lawrence Cheung
  */
 @Data
 public class User implements UserDetails {
@@ -41,6 +43,7 @@ public class User implements UserDetails {
         return this.password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
