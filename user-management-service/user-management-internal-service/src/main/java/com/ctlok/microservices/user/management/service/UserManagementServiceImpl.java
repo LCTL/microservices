@@ -114,18 +114,23 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public Stream<Boolean> updatePassword( final User user, final String password ) {
-        return findById( user.getId() )
+    public Stream<Boolean> updatePassword( final String id, final String password ) {
+        return findById( id )
                 .map( optional -> {
                     if ( optional.isPresent() ) {
                         final User storedUser = optional.get();
-                        user.setPassword( passwordEncoder.encode( password ) );
+                        storedUser.setPassword( passwordEncoder.encode( password ) );
                         userRepository.save( storedUser );
                         return Boolean.TRUE;
                     } else {
                         return Boolean.FALSE;
                     }
                 } );
+    }
+
+    @Override
+    public Stream<Boolean> updatePassword( final User user, final String password ) {
+        return updatePassword( user.getId(), password );
     }
 
 }

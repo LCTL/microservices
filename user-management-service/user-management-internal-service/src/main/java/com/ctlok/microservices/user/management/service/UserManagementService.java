@@ -29,6 +29,8 @@ public interface UserManagementService {
 
     Stream<Boolean> deleteUser( User user );
 
+    Stream<Boolean> updatePassword( String id, String password );
+
     Stream<Boolean> updatePassword( User user, String password );
 
 }
