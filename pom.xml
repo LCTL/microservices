@@ -32,11 +32,6 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.projectreactor.spring</groupId>
-            <artifactId>reactor-spring-context</artifactId>
-            <version>${reactor.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
