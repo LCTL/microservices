@@ -20,9 +20,9 @@ import javax.validation.Validator;
  * @author Lawrence Cheung
  */
 @Configuration
-@EnableAutoConfiguration
-@EnableMongoRepositories
 @EnableReactor
+@EnableAutoConfiguration
+@EnableMongoRepositories(basePackages = "com.ctlok.microservices.user.management.repository")
 public class ApplicationConfig {
 
     @Bean
