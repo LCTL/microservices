@@ -5,6 +5,7 @@ import com.ctlok.microservices.commons.service.ValidationService;
 import com.ctlok.microservices.commons.service.impl.Jsr303ValidationService;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +23,8 @@ import javax.validation.Validator;
 @Configuration
 @EnableReactor
 @EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = "com.ctlok.microservices.user.management.repository")
+@EnableMongoRepositories( basePackages = "com.ctlok.microservices.user.management.repository" )
+@ComponentScan( "com.ctlok.microservices.user.management.service" )
 public class ApplicationConfig {
 
     @Bean
