@@ -3,6 +3,7 @@ package com.ctlok.microservices.user.management.test.repository;
 import com.ctlok.microservices.user.management.entity.User;
 import com.ctlok.microservices.user.management.repository.UserRepository;
 import com.ctlok.microservices.user.management.test.ApplicationConfig;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,12 +29,17 @@ public class UserRepositoryTests {
     private UserRepository userRepository;
 
     @Before
-    public void beforeClass() {
+    public void createUser() {
         final User user = new User();
         user.setUsername( "Lawrence" );
         user.setPassword( "123456" );
         user.setRoles( Arrays.asList( "ROLE_USER" ) );
         userRepository.save( user );
+    }
+
+    @After
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 
     @Test
