@@ -83,16 +83,25 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public Stream<User> updateOrCreateUser( final User user ) {
-        return findById( user.getId() )
-                .map( optional -> {
-                    if ( optional.isPresent() ) {
-                        user.setPassword( optional.get().getPassword() );
-                        return Streams.just( userRepository.save( user ) ).dispatchOn( env );
-                    } else {
-                        return createUser( user );
-                    }
-                } )
-                .flatMap( stream -> stream );
+
+        if ( user.getId() == null ) {
+
+            return createUser( user );
+
+        } else {
+
+            return findById( user.getId() )
+                    .map( optional -> {
+                        if ( optional.isPresent() ) {
+                            user.setPassword( optional.get().getPassword() );
+                            return Streams.just( userRepository.save( user ) ).dispatchOn( env );
+                        } else {
+                            return createUser( user );
+                        }
+                    } )
+                    .flatMap( stream -> stream );
+        }
+
     }
 
     @Override
