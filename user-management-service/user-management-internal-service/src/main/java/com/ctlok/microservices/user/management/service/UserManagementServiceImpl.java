@@ -97,15 +97,15 @@ public class UserManagementServiceImpl implements UserManagementService {
         } else {
 
             return findById( user.getId() )
-                    .map( optional -> {
+                    .flatMap( optional -> {
                         if ( optional.isPresent() ) {
                             user.setPassword( optional.get().getPassword() );
                             return Streams.just( userRepository.save( user ) ).dispatchOn( env );
                         } else {
                             return createUser( user );
                         }
-                    } )
-                    .flatMap( stream -> stream );
+                    } );
+
         }
 
     }
