@@ -88,6 +88,19 @@ public class UserManagementServiceTests {
     public void testIsUsernamePasswordExistAndMatch() throws Throwable {
 
         testCreateUser();
+        final Boolean match = userManagementService
+                .isUsernamePasswordExistAndMatch( "PP", "123456" )
+                .next()
+                .await( 1, TimeUnit.SECONDS );
+
+        assertThat( "password match", match, equalTo( Boolean.TRUE ) );
+
+    }
+
+    @Test
+    public void testIsUsernamePasswordExistAndMatchByUser() throws Throwable {
+
+        testCreateUser();
 
         final User user = new User();
         user.setUsername( "PP" );
@@ -131,8 +144,6 @@ public class UserManagementServiceTests {
                 .createUser( user )
                 .next()
                 .await( 1, TimeUnit.SECONDS );
-
-        System.out.println( user.getRoles() );
 
         assertThat( "not null", storedUser, notNullValue() );
         assertThat( "id not null", storedUser.getId(), notNullValue() );

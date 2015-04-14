@@ -57,16 +57,22 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public Stream<Boolean> isUsernamePasswordExistAndMatch( final User user ) {
-        return findByUsername( user.getUsername() )
+    public Stream<Boolean> isUsernamePasswordExistAndMatch(
+            final String username, final String password ) {
+        return findByUsername( username )
                 .map( optional -> {
                     if ( optional.isPresent() ) {
                         final User storedUser = optional.get();
-                        return passwordEncoder.matches( user.getPassword(), storedUser.getPassword() );
+                        return passwordEncoder.matches( password, storedUser.getPassword() );
                     } else {
                         return Boolean.FALSE;
                     }
                 } );
+    }
+
+    @Override
+    public Stream<Boolean> isUsernamePasswordExistAndMatch( final User user ) {
+        return isUsernamePasswordExistAndMatch( user.getUsername(), user.getPassword() );
     }
 
     @Override

@@ -19,6 +19,8 @@ public interface UserManagementService {
 
     Stream<Optional<User>> findByUsername( String username );
 
+    Stream<Boolean> isUsernamePasswordExistAndMatch( String username, String password );
+
     Stream<Boolean> isUsernamePasswordExistAndMatch( User user );
 
     Stream<User> createUser( User user );
