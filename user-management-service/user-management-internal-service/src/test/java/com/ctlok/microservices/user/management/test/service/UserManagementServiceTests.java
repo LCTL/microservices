@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -81,6 +82,35 @@ public class UserManagementServiceTests {
 
         assertThat( "user id is 0", user.getId(), equalTo( "0" ) );
         assertThat( "username is Lawrence", user.getUsername(), equalTo( "Lawrence" ) );
+
+    }
+
+    @Test
+    public void testFindByIds() throws Throwable {
+
+        final User[] users = new User[] {
+                new User(), new User(), new User()
+        };
+
+        for ( int i = 0; i < users.length; i++ ) {
+
+            final User user = users[ i ];
+
+            user.setId( Integer.toString( i + 1 ) );
+            user.setUsername( Integer.toString( i ) );
+            user.setPassword( Integer.toString( i ) );
+            user.setRoles( Arrays.asList( "ROLE_USER", "ROLE_ADMIN" ) );
+
+            users[ i ] = userRepository.save( user );
+
+        }
+
+        final List<User> storedUsers = userManagementService
+                .findByIds( Arrays.asList( "1", "2", "3" ) )
+                .next()
+                .await( 1, TimeUnit.SECONDS );
+
+        assertThat( "user id is 0", storedUsers.size(), equalTo( 3 ) );
 
     }
 

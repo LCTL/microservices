@@ -12,7 +12,10 @@ import reactor.Environment;
 import reactor.rx.Stream;
 import reactor.rx.Streams;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by Lawrence Cheung on 2015/4/10.
@@ -46,6 +49,18 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .just( id )
                 .dispatchOn( env )
                 .map( ( i ) -> Optional.ofNullable( userRepository.findOne( i ) ) );
+    }
+
+    @Override
+    public Stream<List<User>> findByIds( final Iterable<String> ids ) {
+
+        return Streams
+                .just( ids )
+                .dispatchOn( env )
+                .map( i -> userRepository.findAll( i ) )
+                        // Handle empty iterable
+                .map( users -> StreamSupport.stream( users.spliterator(), true ).collect( Collectors.toList() ) );
+
     }
 
     @Override

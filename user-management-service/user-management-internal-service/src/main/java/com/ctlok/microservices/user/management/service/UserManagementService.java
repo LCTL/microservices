@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import reactor.rx.Stream;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -16,6 +17,8 @@ public interface UserManagementService {
     Stream<Page<User>> findAll( Pageable pageable );
 
     Stream<Optional<User>> findById( String id );
+
+    Stream<List<User>> findByIds( Iterable<String> ids );
 
     Stream<Optional<User>> findByUsername( String username );
 
