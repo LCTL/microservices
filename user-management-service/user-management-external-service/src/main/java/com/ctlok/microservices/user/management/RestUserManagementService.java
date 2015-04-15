@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import reactor.rx.Streams;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -64,6 +65,12 @@ public class RestUserManagementService {
             @RequestParam( value = "username", required = false ) final String username ) {
         return DeferredResultUtils.executeAsyncWithOptional(
                 userManagementService.findByUsername( username ) );
+    }
+
+    @RequestMapping( method = RequestMethod.GET, params = { "id" } )
+    public DeferredResult<RestResponse<List<User>>> findByUsername(
+            @RequestParam( value = "id", required = false ) final List<String> ids ) {
+        return DeferredResultUtils.executeAsync( userManagementService.findByIds( ids ) );
     }
 
     @RequestMapping( value = "/{id}/password", method = RequestMethod.PUT )
