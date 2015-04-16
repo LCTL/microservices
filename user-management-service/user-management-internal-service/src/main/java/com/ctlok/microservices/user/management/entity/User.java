@@ -51,6 +51,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if ( roles == null ) {
             return Collections.emptyList();
