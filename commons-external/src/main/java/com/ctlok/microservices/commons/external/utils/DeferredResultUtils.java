@@ -68,13 +68,7 @@ public class DeferredResultUtils {
         final DeferredResult<RestResponse<T>> deferredResult = new DeferredResult<>();
 
         promise
-                .onSuccess( ( output ) -> {
-                    if ( output == null ) {
-                        throw new ResourceNotFoundException();
-                    } else {
-                        deferredResult.setResult( RestResponse.wrap( output ) );
-                    }
-                } )
+                .onSuccess( output -> deferredResult.setResult( RestResponse.wrap( output ) ) )
                 .onError( deferredResult:: setErrorResult );
 
         return deferredResult;
