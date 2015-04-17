@@ -68,13 +68,13 @@ public class RestUserManagementService {
     }
 
     @RequestMapping( method = RequestMethod.GET, params = { "id" } )
-    public DeferredResult<RestResponse<List<User>>> findByUsername(
+    public DeferredResult<RestResponse<List<User>>> findByIds(
             @RequestParam( value = "id", required = false ) final List<String> ids ) {
         return DeferredResultUtils.executeAsync( userManagementService.findByIds( ids ) );
     }
 
     @RequestMapping( value = "/{id}/password", method = RequestMethod.PUT )
-    public DeferredResult<RestResponse<Boolean>> findByUsername(
+    public DeferredResult<RestResponse<Boolean>> updatePassword(
             @PathVariable( "id" ) final String id, @RequestBody User user ) {
         return DeferredResultUtils.executeAsync( userManagementService.updatePassword( id, user.getPassword() ) );
     }
