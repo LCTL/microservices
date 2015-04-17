@@ -1,3 +1,5 @@
+package integration;
+
 import com.ctlok.microservices.user.management.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

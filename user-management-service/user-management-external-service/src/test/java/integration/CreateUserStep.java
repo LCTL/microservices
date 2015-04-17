@@ -1,3 +1,5 @@
+package integration;
+
 import com.ctlok.microservices.commons.external.RestResponse;
 import com.ctlok.microservices.user.management.Application;
 import com.ctlok.microservices.user.management.entity.User;
