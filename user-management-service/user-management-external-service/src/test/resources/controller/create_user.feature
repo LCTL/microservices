@@ -4,5 +4,5 @@ Feature: Create User
     Given user with the username 'Lawrence', password '123456' and roles 'ROLE_USER'
     When find by username 'Lawrence'
     Then 'Lawrence' should has been found
-    Then '123456' should encoded
-    Then roles should contain 'ROLE_USER'
+    And password '123456' should encoded
+    And roles should contain 'ROLE_USER'

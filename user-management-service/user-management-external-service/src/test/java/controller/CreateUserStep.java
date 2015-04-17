@@ -82,7 +82,7 @@ public class CreateUserStep {
 
     }
 
-    @Then( "^'(.+)' should encoded$" )
+    @Then( "^password '(.+)' should encoded$" )
     public void verifyPassword( final String password ) {
 
         assertThat( "username match", response.getValue().getPassword(), notNullValue() );
