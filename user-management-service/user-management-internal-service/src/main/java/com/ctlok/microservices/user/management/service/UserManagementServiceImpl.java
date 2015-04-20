@@ -96,7 +96,6 @@ public class UserManagementServiceImpl implements UserManagementService {
                 .just( user )
                 .dispatchOn( env )
                 .map( u -> {
-                    u.setId( null );
                     u.setPassword( passwordEncoder.encode( u.getPassword() ) );
                     return userRepository.save( u );
                 } );
