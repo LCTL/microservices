@@ -49,17 +49,6 @@ public class FindUserStep {
     }
 
     @Given( "^the user management system is initialized with the following data$" )
-    public void createUser( final List<UserForCucumber> users ) {
-
-        // for execute UserForCucumber.getRoles method
-        // should be remove this code if found method to create collection by cucumber data
-        users.toString();
-
-        userRepository.save( users );
-
-    }
-
-    @Given( "^the user management system is initialized with the following data using service$" )
     public void createUserByService( final List<UserForCucumber> users ) {
 
         // for execute UserForCucumber.getRoles method
